@@ -73,3 +73,23 @@ remove Pyright's "variable not accessed" notes, add the following:
 
 (advice-add 'eglot--report-to-flymake :filter-args #'my-filter-eglot-diagnostics)
 ```
+
+## Jump to Ruff rule documentation
+
+The `flymake-ruff-goto-doc` function scans the Flymake diagnostics buffer at
+point for a "RULE123"-style code and opens its reference page at
+https://docs.astral.sh/ruff/rules.
+
+To bind it to a key in Flymake diagnostics buffers:
+
+```elisp
+(with-eval-after-load 'flymake
+  (define-key flymake-diagnostics-buffer-mode-map
+              (kbd "M-RET") #'flymake-ruff-goto-doc)
+  (define-key flymake-project-diagnostics-mode-map
+              (kbd "M-RET") #'flymake-ruff-goto-doc))
+```
+
+Now, when you’re in any Flymake diagnostics buffer, pressing `M-RET` on a
+line containing a Ruff rule will open the corresponding rule page in your
+browser.
